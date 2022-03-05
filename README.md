@@ -1,2 +1,2 @@
-# Flutter wordle
-The wordle game, but in Flutter.
+# Flutter-Wordle
+A wordle game written by flutter
