@@ -1,0 +1,6 @@
+package com.example.wordle
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
