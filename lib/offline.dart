@@ -1,12 +1,14 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:41:41
- * @LastEditTime : 2022-03-05 23:22:41
+ * @LastEditTime : 2022-03-06 11:41:41
  * @Description  : Offline page
  */
 
 import 'package:flutter/material.dart';
+import 'package:wordle/validation_provider.dart';
 import './display_pannel.dart';
+import './input_pannel.dart';
 
 class OfflinePage extends StatefulWidget {
   const OfflinePage({Key? key}) : super(key: key);
@@ -41,9 +43,11 @@ class _OfflinePageState extends State<OfflinePage> {
         ],
       ),
       body: Column(
-        children: [
+        children: const <Widget>[
           Expanded(
-            child: WordleDisplayWidget(),
+            child: ValidationProvider(
+              child: WordleDisplayWidget(),
+            )
           ),
         ],
       ),

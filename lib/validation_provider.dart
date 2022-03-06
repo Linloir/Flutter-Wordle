@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 21:40:51
- * @LastEditTime : 2022-03-05 23:06:28
+ * @LastEditTime : 2022-03-06 11:42:36
  * @Description  : Validation Provider class
  */
 
@@ -80,10 +80,12 @@ class _ValidationProviderState extends State<ValidationProvider> {
     return NotificationListener<InputNotification>(
       child: widget.child,
       onNotification: (noti) {
+        print('Get');
         if(noti.type == InputType.inputConfirmation){
           if(curAttempt.length < 5) {
+            print('failed');
             //Not enough
-            return false;
+            return true;
           }
           else {
             //Check validation
@@ -91,11 +93,17 @@ class _ValidationProviderState extends State<ValidationProvider> {
               //emit current attempt
               mainBus.emit(
                 event: "Attempt",
-                args: {
-                  "Attempt": curAttempt,
-                  "AttemptCount": curAttemptCount,
-                }
+                args:  <int>[
+                  for(int i = 0; i < 5; i++)
+                    if(curAttempt[i] == answer[i])
+                      1
+                    else if(letterSet.lookup(curAttempt[i]) != null)
+                      2
+                    else
+                      -1
+                  ],
               );
+              print('Emited');
               curAttempt = "";
               curAttemptCount++;
             }
@@ -123,7 +131,7 @@ class _ValidationProviderState extends State<ValidationProvider> {
             curAttempt += noti.msg;
           }
         }
-        return false;
+        return true;
       },
     );
   }
