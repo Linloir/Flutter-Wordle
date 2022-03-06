@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:56:05
- * @LastEditTime : 2022-03-06 12:14:57
+ * @LastEditTime : 2022-03-06 16:10:50
  * @Description  : The display widget of the wordle game
  */
 
@@ -22,20 +22,49 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
   int r = 0;
   int c = 0;
   bool onAnimation = false;
+  bool acceptInput = true;
   late final List<List<Map<String, dynamic>>> inputs;
 
   void _validationAnimation(List<int> validation) async {
     onAnimation = true;
+    bool result = true;
     for(int i = 0; i < 5; i++) {
       setState((){
         inputs[r][i]["State"] = validation[i];
-        print('Set $r, $i to state ${validation[i]}');
       });
+      if(validation[i] != 1) {
+        result = false;
+      }
       await Future.delayed(const Duration(seconds: 1));
     }
+    mainBus.emit(event: "AnimationStops", args: []);
     onAnimation = false;
     r++;
     c = 0;
+    if(r == 6 || result == true) {
+      mainBus.emit(event: "Result", args: result);
+      acceptInput = false;
+    }
+  }
+
+  void _onValidation(dynamic args) {
+    List<int> validation = args;
+    _validationAnimation(validation);
+  }
+
+  void _onNewGame(dynamic args) {
+    setState(() {
+      r = 0;
+      c = 0;
+      onAnimation = false;
+      acceptInput = true;
+      for(int i = 0; i < 6; i++) {
+        for(int j = 0; j < 5; j++) {
+          inputs[i][j]["Letter"] = "";
+          inputs[i][j]["State"] = 0;
+        }
+      }
+    });
   }
 
   @override
@@ -56,15 +85,15 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
             }
         ]
     ];
-    mainBus.onBus(
-      event: "Attempt",
-      onEvent: (args) {
-        print('Heard');
-        List<int> validation = args;
-        print(validation);
-        _validationAnimation(validation);
-      }
-    );
+    mainBus.onBus(event: "Attempt", onEvent: _onValidation,);
+    mainBus.onBus(event: "NewGame", onEvent: _onNewGame);
+  }
+
+  @override
+  void dispose() {
+    mainBus.offBus(event: "Attempt", callBack: _onValidation);
+    mainBus.offBus(event: "NewGame", callBack: _onNewGame);
+    super.dispose();
   }
 
   @override
@@ -121,16 +150,16 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: inputs[i][j]["State"] == 1 ? Colors.green[600]! :
-                                             inputs[i][j]["State"] == 2 ? Colors.yellow[800]! : 
-                                             inputs[i][j]["State"] == 3 ? Colors.grey[850]! :
-                                             inputs[i][j]["State"] == -1 ? Colors.grey[700]! :
-                                             Colors.grey[400]!,
+                                            inputs[i][j]["State"] == 2 ? Colors.yellow[800]! : 
+                                            inputs[i][j]["State"] == 3 ? Colors.grey[850]! :
+                                            inputs[i][j]["State"] == -1 ? Colors.grey[700]! :
+                                            Colors.grey[400]!,
                                         width: 3.0,
                                       ),
                                       color: inputs[i][j]["State"] == 1 ? Colors.green[600]! :
-                                             inputs[i][j]["State"] == 2 ? Colors.yellow[800]! : 
-                                             inputs[i][j]["State"] == -1 ? Colors.grey[700]! :
-                                             Colors.white,
+                                            inputs[i][j]["State"] == 2 ? Colors.yellow[800]! : 
+                                            inputs[i][j]["State"] == -1 ? Colors.grey[700]! :
+                                            Colors.white,
                                     ),
                                     child: Center(
                                       child: Text(
@@ -154,19 +183,27 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
                 ],
               ),
             ),
-          InputPannelWidget(),
+          const InputPannelWidget(),
         ],
       ),
       onNotification: (noti) {
-        print('Get');
         if(noti.type == InputType.singleCharacter) {
-          if(r < 6 && c < 5 && !onAnimation) {
+          if(r < 6 && c < 5 && !onAnimation && acceptInput) {
             setState((){
               inputs[r][c]["Letter"] = noti.msg;
               inputs[r][c]["State"] = 3;
               var controller = inputs[r][c]["InputAnimationController"] as AnimationController;
               controller.forward().then((value) => controller.reverse());
               c++;
+            });
+          }
+        }
+        else if(noti.type == InputType.backSpace) {
+          if(c > 0 && !onAnimation) {
+            setState(() {
+              inputs[r][c - 1]["Letter"] = "";
+              inputs[r][c - 1]["State"] = 0;
+              c--;
             });
           }
         }

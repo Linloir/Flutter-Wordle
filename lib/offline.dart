@@ -1,14 +1,14 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:41:41
- * @LastEditTime : 2022-03-06 11:41:41
+ * @LastEditTime : 2022-03-06 16:22:11
  * @Description  : Offline page
  */
 
 import 'package:flutter/material.dart';
+import 'package:wordle/event_bus.dart';
 import 'package:wordle/validation_provider.dart';
 import './display_pannel.dart';
-import './input_pannel.dart';
 
 class OfflinePage extends StatefulWidget {
   const OfflinePage({Key? key}) : super(key: key);
@@ -36,9 +36,11 @@ class _OfflinePageState extends State<OfflinePage> {
         iconTheme: const IconThemeData(color: Colors.black),
         actions: [
           IconButton(
-            icon: const Icon(Icons.history),
+            icon: const Icon(Icons.refresh_rounded),
             color: Colors.black,
-            onPressed: (){},
+            onPressed: (){
+              mainBus.emit(event: "NewGame", args: []);
+            },
           )
         ],
       ),

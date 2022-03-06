@@ -1,11 +1,12 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:21:34
- * @LastEditTime : 2022-03-05 20:46:33
+ * @LastEditTime : 2022-03-06 16:08:09
  * @Description  : 
  */
 import 'package:flutter/material.dart';
 import './offline.dart';
+import './generator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,13 +36,40 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          child: const Text('Offline'),
-          onPressed: () => Navigator.of(context).pushNamed("/Offline"),
-        )
-      )
+    return FutureBuilder(
+      future: Words.importWordsDatabase(),
+      builder: (context, snapshot) {
+        if(snapshot.connectionState == ConnectionState.done) {
+          return Scaffold(
+            body: Center(
+              child: ElevatedButton(
+                child: const Text('Offline'),
+                onPressed: () => Navigator.of(context).pushNamed("/Offline"),
+              ),
+            ),
+          );
+        }
+        else {
+          return const Center(
+            child: SizedBox(
+              height: 100.0,
+              width: 100.0,
+              child: CircularProgressIndicator(
+                strokeWidth: 5.0,
+              ),
+            ),
+          );
+        }
+      },
     );
+    
+    // Scaffold(
+    //   body: Center(
+    //     child: ElevatedButton(
+    //       child: const Text('Offline'),
+    //       onPressed: () => Navigator.of(context).pushNamed("/Offline"),
+    //     )
+    //   )
+    // );
   }
 }
