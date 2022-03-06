@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:41:41
- * @LastEditTime : 2022-03-06 17:25:21
+ * @LastEditTime : 2022-03-06 22:59:34
  * @Description  : Offline page
  */
 
@@ -44,9 +44,12 @@ class _OfflinePageState extends State<OfflinePage> {
           )
         ],
       ),
-      body: const ValidationProvider(
-        child: WordleDisplayWidget(),
-      )
+      body: Container(
+        child: const ValidationProvider(
+          child: WordleDisplayWidget(),
+        ),
+        color: Colors.white,
+      ),
     );
   }
 }

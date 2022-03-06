@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:55:53
- * @LastEditTime : 2022-03-06 17:28:40
+ * @LastEditTime : 2022-03-06 21:44:36
  * @Description  : Input pannel class
  */
 
@@ -80,164 +80,188 @@ class _InputPannelWidgetState extends State<InputPannelWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 720),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            for(int i = 0; i < 10; i++)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
-                child: SizedBox(
-                  width: 25.0,
-                  height: 50.0,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
-                      backgroundColor: MaterialStateProperty.all<Color?>(
-                        _keyState[_keyPos[0][i]]! == 0 ? Colors.grey[400] :
-                        _keyState[_keyPos[0][i]]! == 1 ? Colors.green[600] :
-                        _keyState[_keyPos[0][i]]! == 2 ? Colors.orange[600] :
-                        Colors.grey[850]
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                const Spacer(flex: 1,),
+                for(int i = 0; i < 10; i++)
+                  Expanded(
+                    flex: 2,
+                    child:Padding(
+                      padding: const EdgeInsets.fromLTRB(3.0, 5.0, 3.0, 5.0),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints.expand(height: 50.0),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
+                            backgroundColor: MaterialStateProperty.all<Color?>(
+                              _keyState[_keyPos[0][i]]! == 0 ? Colors.grey[400] :
+                              _keyState[_keyPos[0][i]]! == 1 ? Colors.green[600] :
+                              _keyState[_keyPos[0][i]]! == 2 ? Colors.orange[600] :
+                              Colors.grey[850]
+                            ),
+                            padding: MaterialStateProperty.all<EdgeInsets?>(const EdgeInsets.all(0)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              _keyPos[0][i],
+                              style: TextStyle (
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: _keyState[_keyPos[0][i]]! == 0 ? Colors.grey[850] : Colors.white,
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            InputNotification(type: InputType.singleCharacter, msg: _keyPos[0][i]).dispatch(context);
+                          },
+                        )
                       ),
                     ),
-                    child: Center(
-                      child: Text(
-                        _keyPos[0][i],
-                        style: TextStyle (
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: _keyState[_keyPos[0][i]]! == 0 ? Colors.grey[850] : Colors.white,
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      InputNotification(type: InputType.singleCharacter, msg: _keyPos[0][i]).dispatch(context);
-                    },
-                  )
-                ),
-              )
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            for(int i = 0; i < 9; i++)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
-                child: SizedBox(
-                  width: 25.0,
-                  height: 50.0,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
-                      backgroundColor: MaterialStateProperty.all<Color?>(
-                        _keyState[_keyPos[1][i]]! == 0 ? Colors.grey[400] :
-                        _keyState[_keyPos[1][i]]! == 1 ? Colors.green[600] :
-                        _keyState[_keyPos[1][i]]! == 2 ? Colors.orange[600] :
-                        Colors.grey[850]
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        _keyPos[1][i],
-                        style: TextStyle (
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: _keyState[_keyPos[1][i]]! == 0 ? Colors.grey[850] : Colors.white,
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      InputNotification(type: InputType.singleCharacter, msg: _keyPos[1][i]).dispatch(context);
-                    },
-                  )
-                ),
-              ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
-              child: SizedBox(
-                width: 50,
-                height: 50.0,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
-                    backgroundColor: MaterialStateProperty.all<Color?>(Colors.grey[700]),
                   ),
-                  child: const Icon(
-                    Icons.backspace_rounded,
-                    color: Colors.white,
+                const Spacer(flex: 1,),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                for(int i = 0; i < 9; i++)
+                  Expanded(
+                    flex: 1,
+                    child:Padding(
+                      padding: const EdgeInsets.fromLTRB(3.0, 5.0, 3.0, 5.0),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints.expand(height: 50.0),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
+                            backgroundColor: MaterialStateProperty.all<Color?>(
+                              _keyState[_keyPos[1][i]]! == 0 ? Colors.grey[400] :
+                              _keyState[_keyPos[1][i]]! == 1 ? Colors.green[600] :
+                              _keyState[_keyPos[1][i]]! == 2 ? Colors.orange[600] :
+                              Colors.grey[850]
+                            ),
+                            padding: MaterialStateProperty.all<EdgeInsets?>(const EdgeInsets.all(0)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              _keyPos[1][i],
+                              style: TextStyle (
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: _keyState[_keyPos[1][i]]! == 0 ? Colors.grey[850] : Colors.white,
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            InputNotification(type: InputType.singleCharacter, msg: _keyPos[1][i]).dispatch(context);
+                          },
+                        )
+                      ),
+                    ),
                   ),
-                  onPressed: () {
-                    const InputNotification(type: InputType.backSpace, msg: "").dispatch(context);
-                  },
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints.expand(height: 50.0),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
+                          backgroundColor: MaterialStateProperty.all<Color?>(Colors.grey[700]),
+                          padding: MaterialStateProperty.all<EdgeInsets?>(const EdgeInsets.all(0)),
+                        ),
+                        child: const Icon(
+                          Icons.keyboard_backspace_rounded,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          const InputNotification(type: InputType.backSpace, msg: "").dispatch(context);
+                        },
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                const Spacer(flex: 1,),
+                for(int i = 0; i < 7; i++)
+                  Expanded(
+                    flex: 2,
+                    child:Padding(
+                      padding: const EdgeInsets.fromLTRB(3.0, 5.0, 3.0, 5.0),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints.expand(height: 50.0),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
+                            backgroundColor: MaterialStateProperty.all<Color?>(
+                              _keyState[_keyPos[2][i]]! == 0 ? Colors.grey[400] :
+                              _keyState[_keyPos[2][i]]! == 1 ? Colors.green[600] :
+                              _keyState[_keyPos[2][i]]! == 2 ? Colors.orange[600] :
+                              Colors.grey[850]
+                            ),
+                            padding: MaterialStateProperty.all<EdgeInsets?>(const EdgeInsets.all(0)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              _keyPos[2][i],
+                              style: TextStyle (
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: _keyState[_keyPos[2][i]]! == 0 ? Colors.grey[850] : Colors.white,
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            InputNotification(type: InputType.singleCharacter, msg: _keyPos[2][i]).dispatch(context);
+                          },
+                        )
+                      ),
+                    ),
+                  ),
+                Expanded(
+                  flex: 6,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints.expand(height: 50.0),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
+                          backgroundColor: MaterialStateProperty.all<Color?>(Colors.green[600]),
+                          padding: MaterialStateProperty.all<EdgeInsets?>(const EdgeInsets.all(0)),
+                        ),
+                        child: const Icon(
+                          Icons.keyboard_return_rounded,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          const InputNotification(type: InputType.inputConfirmation, msg: "").dispatch(context);
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                const Spacer(flex: 1,),
+              ],
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            for(int i = 0; i < 7; i++)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
-                child: SizedBox(
-                  width: 25.0,
-                  height: 50.0,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
-                      backgroundColor: MaterialStateProperty.all<Color?>(
-                        _keyState[_keyPos[2][i]]! == 0 ? Colors.grey[400] :
-                        _keyState[_keyPos[2][i]]! == 1 ? Colors.green[600] :
-                        _keyState[_keyPos[2][i]]! == 2 ? Colors.orange[600] :
-                        Colors.grey[850]
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        _keyPos[2][i],
-                        style: TextStyle (
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: _keyState[_keyPos[2][i]]! == 0 ? Colors.grey[850] : Colors.white,
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      InputNotification(type: InputType.singleCharacter, msg: _keyPos[2][i]).dispatch(context);
-                    },
-                  )
-                ),
-              ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
-              child: SizedBox(
-                width: 70,
-                height: 50.0,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
-                    backgroundColor: MaterialStateProperty.all<Color?>(Colors.green[600]),
-                  ),
-                  child: const Icon(
-                    Icons.keyboard_return_rounded,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    const InputNotification(type: InputType.inputConfirmation, msg: "").dispatch(context);
-                  },
-                ),
-              ),
-            )
-          ],
-        ),
-      ],
+      ),
     );
   }
 }

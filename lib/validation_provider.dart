@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 21:40:51
- * @LastEditTime : 2022-03-06 16:17:30
+ * @LastEditTime : 2022-03-06 23:13:23
  * @Description  : Validation Provider class
  */
 
@@ -72,7 +72,7 @@ class _ValidationProviderState extends State<ValidationProvider> {
       builder: (context) {
         return AlertDialog(
           title: const Text('Result'),
-          content: Text(result ? "Won" : "Lost"),
+          content: Text(result ? "Won" : "Lost, answer is $answer"),
           actions: [
             TextButton(
               child: const Text('Back'),
