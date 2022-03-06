@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:55:53
- * @LastEditTime : 2022-03-06 16:09:08
+ * @LastEditTime : 2022-03-06 17:28:40
  * @Description  : Input pannel class
  */
 
@@ -91,8 +91,8 @@ class _InputPannelWidgetState extends State<InputPannelWidget> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                 child: SizedBox(
-                  width: 50.0,
-                  height: 80.0,
+                  width: 25.0,
+                  height: 50.0,
                   child: ElevatedButton(
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -107,7 +107,7 @@ class _InputPannelWidgetState extends State<InputPannelWidget> {
                       child: Text(
                         _keyPos[0][i],
                         style: TextStyle (
-                          fontSize: 18,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: _keyState[_keyPos[0][i]]! == 0 ? Colors.grey[850] : Colors.white,
                         ),
@@ -129,8 +129,8 @@ class _InputPannelWidgetState extends State<InputPannelWidget> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                 child: SizedBox(
-                  width: 50.0,
-                  height: 80.0,
+                  width: 25.0,
+                  height: 50.0,
                   child: ElevatedButton(
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -145,7 +145,7 @@ class _InputPannelWidgetState extends State<InputPannelWidget> {
                       child: Text(
                         _keyPos[1][i],
                         style: TextStyle (
-                          fontSize: 18,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: _keyState[_keyPos[1][i]]! == 0 ? Colors.grey[850] : Colors.white,
                         ),
@@ -160,8 +160,8 @@ class _InputPannelWidgetState extends State<InputPannelWidget> {
             Padding(
               padding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
               child: SizedBox(
-                width: 110,
-                height: 80.0,
+                width: 50,
+                height: 50.0,
                 child: ElevatedButton(
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -187,8 +187,8 @@ class _InputPannelWidgetState extends State<InputPannelWidget> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                 child: SizedBox(
-                  width: 50.0,
-                  height: 80.0,
+                  width: 25.0,
+                  height: 50.0,
                   child: ElevatedButton(
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -203,7 +203,7 @@ class _InputPannelWidgetState extends State<InputPannelWidget> {
                       child: Text(
                         _keyPos[2][i],
                         style: TextStyle (
-                          fontSize: 18,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: _keyState[_keyPos[2][i]]! == 0 ? Colors.grey[850] : Colors.white,
                         ),
@@ -218,8 +218,8 @@ class _InputPannelWidgetState extends State<InputPannelWidget> {
             Padding(
               padding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
               child: SizedBox(
-                width: 170,
-                height: 80.0,
+                width: 70,
+                height: 50.0,
                 child: ElevatedButton(
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),

@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:56:05
- * @LastEditTime : 2022-03-06 16:10:50
+ * @LastEditTime : 2022-03-06 17:32:26
  * @Description  : The display widget of the wordle game
  */
 
@@ -183,7 +183,10 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
                 ],
               ),
             ),
-          const InputPannelWidget(),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 30.0),
+            child: InputPannelWidget(),
+          ),
         ],
       ),
       onNotification: (noti) {
