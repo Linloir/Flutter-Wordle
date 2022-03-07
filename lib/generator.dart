@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-06 15:03:57
- * @LastEditTime : 2022-03-06 23:11:33
+ * @LastEditTime : 2022-03-07 08:34:56
  * @Description  : Word generator
  */
 
@@ -12,14 +12,16 @@ import 'dart:math';
 abstract class Words {
   static Set<String> dataBase = <String>{};
   static int _length = 0;
+  static String _cache = "";
   //static Map<String, String> explainations = {};
 
   static Future<void> importWordsDatabase({int length = 5}) async {
     //explainations.clear();
-    if(length != _length){
+    if(length != _length || dataBase.isEmpty){
       _length = length;
       dataBase.clear();
-      var data = await rootBundle.loadString('assets/unixWords.txt');
+      _cache = "";
+      var data = await rootBundle.loadString('popular.txt');
       // LineSplitter.split(data).forEach((line) {
       //   int seperatePos = line.indexOf(',');
       //   if(seperatePos != length + 2) {
@@ -31,13 +33,15 @@ abstract class Words {
       //   explainations[word] = expl;
       // });
       LineSplitter.split(data).forEach((line) {
-        if(line.length == length) {
-          dataBase.add(line);
+        if(line.length == length && line != _cache) {
+          dataBase.add(line.toLowerCase());
         }
+        _cache = line + "s";
       });
+      print('Imported ${dataBase.length}');
     }
   }
-  
+
   static Future<String> generateWord() async{
     int bound = dataBase.length;
     if(bound == 0) {

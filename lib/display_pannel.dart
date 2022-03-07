@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:56:05
- * @LastEditTime : 2022-03-06 23:01:03
+ * @LastEditTime : 2022-03-07 09:35:24
  * @Description  : The display widget of the wordle game
  */
 
@@ -160,21 +160,21 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
                                                   border: Border.all(
                                                     color: inputs[i][j]["State"] == 1 ? Colors.green[600]! :
                                                           inputs[i][j]["State"] == 2 ? Colors.yellow[800]! :
-                                                          inputs[i][j]["State"] == 3 ? Colors.grey[850]! :
+                                                          inputs[i][j]["State"] == 3 ? Theme.of(context).brightness == Brightness.dark ? Colors.grey[400]! : Colors.grey[850]! :
                                                           inputs[i][j]["State"] == -1 ? Colors.grey[700]! :
-                                                          Colors.grey[400]!,
+                                                          Theme.of(context).brightness == Brightness.dark ? Colors.grey[700]! : Colors.grey[400]!,
                                                     width: 2.0,
                                                   ),
                                                   color: inputs[i][j]["State"] == 1 ? Colors.green[600]! :
                                                         inputs[i][j]["State"] == 2 ? Colors.yellow[800]! :
                                                         inputs[i][j]["State"] == -1 ? Colors.grey[700]! :
-                                                        Colors.white,
+                                                        Theme.of(context).brightness == Brightness.dark ? Colors.grey[850]! : Colors.white,
                                                 ),
                                                 child: Center(
                                                   child: Text(
                                                     inputs[i][j]["Letter"],
                                                     style: TextStyle(
-                                                      color: inputs[i][j]["State"] == 3 ? Colors.grey[850]! :Colors.white,
+                                                      color: inputs[i][j]["State"] == 3 ? Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.grey[850]! :Colors.white,
                                                       fontSize: 30,
                                                       fontWeight: FontWeight.bold,
                                                     ),

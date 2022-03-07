@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 21:40:51
- * @LastEditTime : 2022-03-06 23:13:23
+ * @LastEditTime : 2022-03-07 08:10:08
  * @Description  : Validation Provider class
  */
 
@@ -40,6 +40,7 @@ class _ValidationProviderState extends State<ValidationProvider> {
 
   void _newGame() async{
     answer = await Words.generateWord();
+    print('Generated answer $answer');
     answer = answer.toUpperCase();
     letterMap = {};
     answer.split('').forEach((c) {

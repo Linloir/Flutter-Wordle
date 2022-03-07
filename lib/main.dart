@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:21:34
- * @LastEditTime : 2022-03-06 23:07:38
+ * @LastEditTime : 2022-03-07 09:20:28
  * @Description  : 
  */
 import 'package:flutter/material.dart';
@@ -13,16 +13,42 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  var brightness = Brightness.light;
+
+  void _onThemeChange(dynamic args) {
+    setState(() {
+      brightness = brightness == Brightness.light ? Brightness.dark : Brightness.light;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    mainBus.onBus(event: "ToggleTheme", onEvent: _onThemeChange);
+  }
+
+  @override
+  void dispose(){
+    mainBus.offBus(event: "ToggleTheme", callBack: _onThemeChange);
+    super.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Wordle',
       theme: ThemeData(
-        primarySwatch: Colors.grey
+        primarySwatch: Colors.grey,
+        brightness: brightness,
       ),
       routes: {
         "/": (context) => const HomePage(),
@@ -60,7 +86,7 @@ class HomePage extends StatelessWidget {
                               Text(
                                 'OFFLINE PLAYGROUND',
                                 style: TextStyle(
-                                  color: Colors.grey[850]!,
+                                  color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.grey[850]!,
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.bold
                                 ),

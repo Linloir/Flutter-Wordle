@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:55:53
- * @LastEditTime : 2022-03-06 21:44:36
+ * @LastEditTime : 2022-03-07 08:07:14
  * @Description  : Input pannel class
  */
 
@@ -104,8 +104,8 @@ class _InputPannelWidgetState extends State<InputPannelWidget> {
                             backgroundColor: MaterialStateProperty.all<Color?>(
                               _keyState[_keyPos[0][i]]! == 0 ? Colors.grey[400] :
                               _keyState[_keyPos[0][i]]! == 1 ? Colors.green[600] :
-                              _keyState[_keyPos[0][i]]! == 2 ? Colors.orange[600] :
-                              Colors.grey[850]
+                              _keyState[_keyPos[0][i]]! == 2 ? Colors.yellow[800] :
+                              Colors.grey[700]
                             ),
                             padding: MaterialStateProperty.all<EdgeInsets?>(const EdgeInsets.all(0)),
                           ),
@@ -146,8 +146,8 @@ class _InputPannelWidgetState extends State<InputPannelWidget> {
                             backgroundColor: MaterialStateProperty.all<Color?>(
                               _keyState[_keyPos[1][i]]! == 0 ? Colors.grey[400] :
                               _keyState[_keyPos[1][i]]! == 1 ? Colors.green[600] :
-                              _keyState[_keyPos[1][i]]! == 2 ? Colors.orange[600] :
-                              Colors.grey[850]
+                              _keyState[_keyPos[1][i]]! == 2 ? Colors.yellow[800] :
+                              Colors.grey[700]
                             ),
                             padding: MaterialStateProperty.all<EdgeInsets?>(const EdgeInsets.all(0)),
                           ),
@@ -211,8 +211,8 @@ class _InputPannelWidgetState extends State<InputPannelWidget> {
                             backgroundColor: MaterialStateProperty.all<Color?>(
                               _keyState[_keyPos[2][i]]! == 0 ? Colors.grey[400] :
                               _keyState[_keyPos[2][i]]! == 1 ? Colors.green[600] :
-                              _keyState[_keyPos[2][i]]! == 2 ? Colors.orange[600] :
-                              Colors.grey[850]
+                              _keyState[_keyPos[2][i]]! == 2 ? Colors.yellow[800] :
+                              Colors.grey[700]
                             ),
                             padding: MaterialStateProperty.all<EdgeInsets?>(const EdgeInsets.all(0)),
                           ),
