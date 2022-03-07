@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:56:05
- * @LastEditTime : 2022-03-07 12:03:43
+ * @LastEditTime : 2022-03-07 14:37:33
  * @Description  : The display widget of the wordle game
  */
 
@@ -28,7 +28,7 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
   void _validationAnimation(List<int> validation) async {
     onAnimation = true;
     bool result = true;
-    for(int i = 0; i < 5; i++) {
+    for(int i = 0; i < 5 && onAnimation; i++) {
       setState((){
         inputs[r][i]["State"] = validation[i];
       });
@@ -36,6 +36,9 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
         result = false;
       }
       await Future.delayed(const Duration(seconds: 1));
+    }
+    if(!onAnimation) {
+      return;
     }
     mainBus.emit(event: "AnimationStops", args: []);
     onAnimation = false;
@@ -212,7 +215,7 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
               c++;
             });
           }
-          else {
+          else if(onAnimation){
             return true;
           }
         }

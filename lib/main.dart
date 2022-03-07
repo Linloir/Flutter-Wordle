@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:21:34
- * @LastEditTime : 2022-03-07 09:20:28
+ * @LastEditTime : 2022-03-07 14:40:28
  * @Description  : 
  */
 import 'package:flutter/material.dart';
@@ -59,73 +59,105 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool _ignorance = false;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: Words.importWordsDatabase(),
       builder: (context, snapshot) {
-        if(snapshot.connectionState == ConnectionState.done) {
-          return Scaffold(
-            body: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(50.0),
-                child: AspectRatio(
-                  aspectRatio: 16 / 9,
-                    child: OutlinedButton(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'OFFLINE PLAYGROUND',
-                                style: TextStyle(
-                                  color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.grey[850]!,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold
+        if(snapshot.connectionState == ConnectionState.done || _ignorance) {
+          if(snapshot.hasData || _ignorance){
+            return Scaffold(
+              body: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(50.0),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                      child: OutlinedButton(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'OFFLINE PLAYGROUND',
+                                  style: TextStyle(
+                                    color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.grey[850]!,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold
+                                  ),
                                 ),
-                              ),
-                              // Padding(
-                              //   padding: const EdgeInsets.symmetric(vertical: 8.0),
-                              //   child: Container(
-                              //     width: 80.0,
-                              //     height: 8.0,
-                              //     decoration: BoxDecoration(
-                              //       color: Colors.grey[800],
-                              //       borderRadius: BorderRadius.circular(3.5),
-                              //     ),
-                              //   ),
-                              // ),
-                              Text(
-                                'Play Wordle game offline using local word database',
-                                style: TextStyle(
-                                  color: Colors.grey[500],
-                                  fontSize: 12.0,
+                                // Padding(
+                                //   padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                //   child: Container(
+                                //     width: 80.0,
+                                //     height: 8.0,
+                                //     decoration: BoxDecoration(
+                                //       color: Colors.grey[800],
+                                //       borderRadius: BorderRadius.circular(3.5),
+                                //     ),
+                                //   ),
+                                // ),
+                                Text(
+                                  'Play Wordle game offline using local word database',
+                                  style: TextStyle(
+                                    color: Colors.grey[500],
+                                    fontSize: 12.0,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-                        padding: MaterialStateProperty.all<EdgeInsets?>(const EdgeInsets.all(0)),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed("/Offline");
-                        mainBus.emit(event: "NewGame", args: []);
-                      }
-                    )
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all<OutlinedBorder?>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                          padding: MaterialStateProperty.all<EdgeInsets?>(const EdgeInsets.all(0)),
+                        ),
+                        onPressed: () async {
+                          Navigator.of(context).pushNamed("/Offline");
+                          //Future.delayed(const Duration(milliseconds: 10)).then((e) => mainBus.emit(event: "NewGame", args: []));
+                        }
+                      )
+                    ),
+                )
+              ),
+            );
+          }
+          else {
+            return Container(
+              color: Colors.black38,
+              child: AlertDialog(
+                title: const Text('Failure'),
+                content: Text(snapshot.error as String),
+                actions: [
+                  TextButton(
+                    child: const Text('Retry'),
+                    onPressed: () => setState(() {}),
                   ),
-              )
-            ),
-          );
+                  TextButton(
+                    child: const Text('Ignore'),
+                    onPressed: () {
+                      setState((){
+                        _ignorance = true;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            );
+          }
         }
         else {
           return Scaffold(
