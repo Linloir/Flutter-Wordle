@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:41:41
- * @LastEditTime : 2022-03-07 09:30:56
+ * @LastEditTime : 2022-03-07 11:05:14
  * @Description  : Offline page
  */
 
@@ -40,8 +40,8 @@ class _OfflinePageState extends State<OfflinePage> with TickerProviderStateMixin
         actions: [AnimatedSwitcher(
             duration: const Duration(milliseconds: 750),
             reverseDuration: const Duration(milliseconds: 750),
-            switchInCurve: Curves.bounceInOut,
-            switchOutCurve: Curves.bounceInOut,
+            switchInCurve: Curves.bounceOut,
+            switchOutCurve: Curves.bounceIn,
             transitionBuilder: (child, animation) {
               var rotateAnimation = Tween<double>(begin: 0, end: 2 * pi).animate(animation);
               var opacAnimation = Tween<double>(begin: 0, end: 1).animate(animation);

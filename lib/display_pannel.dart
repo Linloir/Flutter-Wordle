@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:56:05
- * @LastEditTime : 2022-03-07 09:35:24
+ * @LastEditTime : 2022-03-07 12:03:43
  * @Description  : The display widget of the wordle game
  */
 
@@ -211,6 +211,9 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
               controller.forward().then((value) => controller.reverse());
               c++;
             });
+          }
+          else {
+            return true;
           }
         }
         else if(noti.type == InputType.backSpace) {

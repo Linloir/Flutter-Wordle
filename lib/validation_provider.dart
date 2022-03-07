@@ -1,11 +1,12 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 21:40:51
- * @LastEditTime : 2022-03-07 08:10:08
+ * @LastEditTime : 2022-03-07 11:15:55
  * @Description  : Validation Provider class
  */
 
 import 'package:flutter/material.dart';
+import 'show_dialogs.dart';
 import './event_bus.dart';
 import './generator.dart';
 
@@ -39,8 +40,22 @@ class _ValidationProviderState extends State<ValidationProvider> {
   }
 
   void _newGame() async{
-    answer = await Words.generateWord();
-    print('Generated answer $answer');
+    showLoadingDialog(context: context);
+    var generated = await Words.generateWord();
+    Navigator.of(context).pop();
+    while(generated == null) {
+      var retry = await showFailedDialog(context: context);
+      if(retry == null) {
+        Navigator.of(context).popUntil(ModalRoute.withName('/'));
+        break;
+      }
+      else {
+        showLoadingDialog(context: context);
+        generated = await Words.generateWord();
+        Navigator.of(context).pop();
+      }
+    }
+    answer = generated ?? "";
     answer = answer.toUpperCase();
     letterMap = {};
     answer.split('').forEach((c) {
@@ -95,7 +110,6 @@ class _ValidationProviderState extends State<ValidationProvider> {
   @override
   void initState(){
     super.initState();
-    _newGame();
     mainBus.onBus(event: "NewGame", onEvent: _onNewGame);
     mainBus.onBus(event: "Result", onEvent: _onGameEnd);
   }

@@ -1,11 +1,9 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 21:50:33
- * @LastEditTime : 2022-03-05 23:15:18
+ * @LastEditTime : 2022-03-07 10:26:04
  * @Description  : Event bus class
  */
-
-import 'package:flutter/material.dart';
 
 typedef EventCallBack = void Function(dynamic args);
 
