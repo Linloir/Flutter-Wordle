@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 21:40:51
- * @LastEditTime : 2022-03-07 14:40:46
+ * @LastEditTime : 2022-03-08 22:19:08
  * @Description  : Validation Provider class
  */
 
@@ -44,6 +44,7 @@ class _ValidationProviderState extends State<ValidationProvider> {
     acceptInput = true;
     answer = await Words.generateWord();
     answer = answer.toUpperCase();
+    //print(answer);
     letterMap = {};
     answer.split('').forEach((c) {
       letterMap[c] ??= 0;

@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:56:05
- * @LastEditTime : 2022-03-07 14:37:33
+ * @LastEditTime : 2022-03-08 21:47:38
  * @Description  : The display widget of the wordle game
  */
 
@@ -35,7 +35,7 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
       if(validation[i] != 1) {
         result = false;
       }
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 950));
     }
     if(!onAnimation) {
       return;
@@ -45,7 +45,7 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
     r++;
     c = 0;
     if(r == 6 || result == true) {
-      mainBus.emit(event: "Result", args: result);
+      mainBus.emit(event: "ValidationEnds", args: result);
       acceptInput = false;
     }
   }
@@ -135,7 +135,7 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
                                       child: LayoutBuilder(
                                         builder: (context, constraints) {
                                           return AnimatedSwitcher(
-                                            duration: const Duration(milliseconds: 750),
+                                            duration: const Duration(milliseconds: 700),
                                             switchInCurve: Curves.easeOut,
                                             reverseDuration: const Duration(milliseconds: 0),
                                             transitionBuilder: (child, animation) {
