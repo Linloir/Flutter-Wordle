@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:41:41
- * @LastEditTime : 2022-03-07 14:40:37
+ * @LastEditTime : 2022-03-08 10:28:17
  * @Description  : Offline page
  */
 
@@ -10,7 +10,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:wordle/event_bus.dart';
 import 'package:wordle/validation_provider.dart';
-import './display_pannel.dart';
+import 'package:wordle/display_pannel.dart';
+import 'package:wordle/instruction_pannel.dart';
 
 class OfflinePage extends StatefulWidget {
   const OfflinePage({Key? key}) : super(key: key);
@@ -37,7 +38,8 @@ class _OfflinePageState extends State<OfflinePage> with TickerProviderStateMixin
         title: const Text('WORDLE OFFLINE'),
         centerTitle: true,
         //iconTheme: const IconThemeData(color: Colors.black),
-        actions: [AnimatedSwitcher(
+        actions: [
+          AnimatedSwitcher(
             duration: const Duration(milliseconds: 750),
             reverseDuration: const Duration(milliseconds: 750),
             switchInCurve: Curves.bounceOut,
@@ -65,6 +67,13 @@ class _OfflinePageState extends State<OfflinePage> with TickerProviderStateMixin
               icon: mode == Brightness.light ? const Icon(Icons.dark_mode_outlined) : const Icon(Icons.dark_mode),
               onPressed: () => mainBus.emit(event: "ToggleTheme", args: []),
             ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.help_outline_outlined),
+            //color: Colors.black,
+            onPressed: (){
+              showInstructionDialog(context: context);
+            },
           ),
           IconButton(
             icon: const Icon(Icons.refresh_rounded),
