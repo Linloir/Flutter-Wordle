@@ -23,8 +23,8 @@ Download `.apk` file in the release page, install & enjoy.
 
 # Screenshots
 
-![Screenshot_2022-03-07-15-48-39-230_com.linloir.wordle.jpg](http://pic.linloir.xyz/images/2022/03/08/Screenshot_2022-03-07-15-48-39-230_com.linloir.wordle.jpg)
-
-![Screenshot_2022-03-07-16-14-00-128_com.linloir.wordle.jpg](http://pic.linloir.xyz/images/2022/03/08/Screenshot_2022-03-07-16-14-00-128_com.linloir.wordle.jpg)
-
-![Screenshot_2022-03-07-16-15-23-309_com.linloir.wordle.jpg](http://pic.linloir.xyz/images/2022/03/08/Screenshot_2022-03-07-16-15-23-309_com.linloir.wordle.jpg)
+<p float="left">
+<img src="http://pic.linloir.xyz/images/2022/03/08/Screenshot_2022-03-07-15-48-39-230_com.linloir.wordle.jpg" width="200">
+<img src="http://pic.linloir.xyz/images/2022/03/08/Screenshot_2022-03-07-16-14-00-128_com.linloir.wordle.jpg" width="200">
+<img src="http://pic.linloir.xyz/images/2022/03/08/Screenshot_2022-03-07-16-15-23-309_com.linloir.wordle.jpg" width="200">
+</p>
