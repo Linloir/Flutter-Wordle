@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:41:41
- * @LastEditTime : 2022-03-08 21:44:49
+ * @LastEditTime : 2022-03-09 13:10:14
  * @Description  : Offline page
  */
 
@@ -32,6 +32,9 @@ class _OfflinePageState extends State<OfflinePage> with TickerProviderStateMixin
         mainBus.emit(event: "Result", args: result);
       }
       );
+    }
+    else {
+      mainBus.emit(event: "Result", args: result);
     }
   }
 
