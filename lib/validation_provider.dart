@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 21:40:51
- * @LastEditTime : 2022-03-08 22:19:08
+ * @LastEditTime : 2022-03-11 14:54:02
  * @Description  : Validation Provider class
  */
 
@@ -19,9 +19,15 @@ class InputNotification extends Notification {
 }
 
 class ValidationProvider extends StatefulWidget {
-  const ValidationProvider({Key? key, required this.child}) : super(key: key);
+  static Set<String> validationDatabase = <String>{};
+  
+  const ValidationProvider({Key? key, required this.child, required this.database, required this.wordLen, required this.maxChances, required this.gameMode}) : super(key: key);
 
   final Widget child;
+  final Map<String, List<String>> database;
+  final int wordLen;
+  final int maxChances;
+  final int gameMode;
 
   @override
   State<ValidationProvider> createState() => _ValidationProviderState();
@@ -38,13 +44,14 @@ class _ValidationProviderState extends State<ValidationProvider> {
     _newGame();
   }
 
-  void _newGame() async {
+  void _newGame() {
     curAttempt = "";
     curAttemptCount = 0;
     acceptInput = true;
-    answer = await Words.generateWord();
-    answer = answer.toUpperCase();
-    //print(answer);
+    answer = getNextWord(widget.database);
+    if(!ValidationProvider.validationDatabase.contains(answer)){
+      ValidationProvider.validationDatabase.add(answer);
+    }
     letterMap = {};
     answer.split('').forEach((c) {
       letterMap[c] ??= 0;
@@ -73,7 +80,7 @@ class _ValidationProviderState extends State<ValidationProvider> {
       builder: (context) {
         return AlertDialog(
           title: const Text('Result'),
-          content: Text(result ? "Won" : "Lost, answer is $answer"),
+          content: Text(result ? "Won" : "Lost, answer is ${answer.toLowerCase()}"),
           actions: [
             TextButton(
               child: const Text('Back'),
@@ -113,25 +120,25 @@ class _ValidationProviderState extends State<ValidationProvider> {
       child: widget.child,
       onNotification: (noti) {
         if(noti.type == InputType.inputConfirmation) {
-          if(curAttempt.length < 5) {
+          if(curAttempt.length < widget.wordLen) {
             //Not enough
             return true;
           }
           else {
             //Check validation
-            if(Words.isWordValidate(curAttempt)) {
+            if(ValidationProvider.validationDatabase.lookup(curAttempt) != null) {
               //Generate map
               Map<String, int> leftWordMap = Map.from(letterMap);
-              var positionValRes = <int>[for(int i = 0; i < 5; i++) -1];
+              var positionValRes = <int>[for(int i = 0; i < widget.wordLen; i++) -1];
               var letterValRes = <String, int>{};
-              for(int i = 0; i < 5; i++) {
+              for(int i = 0; i < widget.wordLen; i++) {
                 if(curAttempt[i] == answer[i]) {
                   positionValRes[i] = 1;
                   leftWordMap[curAttempt[i]] = leftWordMap[curAttempt[i]]! - 1;
                   letterValRes[curAttempt[i]] = 1;
                 }
               }
-              for(int i = 0; i < 5; i++) {
+              for(int i = 0; i < widget.wordLen; i++) {
                 if(curAttempt[i] != answer[i] && leftWordMap[curAttempt[i]] != null && leftWordMap[curAttempt[i]]! > 0) {
                   positionValRes[i] = 2;
                   leftWordMap[curAttempt[i]] = leftWordMap[curAttempt[i]]! - 1;
@@ -179,7 +186,7 @@ class _ValidationProviderState extends State<ValidationProvider> {
           }
         }
         else{
-          if(acceptInput && curAttempt.length < 5) {
+          if(acceptInput && curAttempt.length < widget.wordLen) {
             curAttempt += noti.msg;
           }
         }

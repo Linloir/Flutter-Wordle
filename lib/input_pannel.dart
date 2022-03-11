@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:55:53
- * @LastEditTime : 2022-03-07 08:07:14
+ * @LastEditTime : 2022-03-11 11:05:10
  * @Description  : Input pannel class
  */
 
@@ -30,9 +30,11 @@ class _InputPannelWidgetState extends State<InputPannelWidget> {
   }
 
   void _onAnimationStops(dynamic args) {
-    _cache.forEach((key, value) {
-      setState(() {
-        _keyState[key] = value;
+    setState(() {
+      _cache.forEach((key, value) {
+          if(_keyState[key] != 1){
+            _keyState[key] = value;
+          }
       });
     });
   }

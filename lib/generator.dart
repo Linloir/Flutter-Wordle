@@ -1,79 +1,58 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-06 15:03:57
- * @LastEditTime : 2022-03-07 15:55:48
+ * @LastEditTime : 2022-03-11 13:56:33
  * @Description  : Word generator
  */
 
-import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 
-abstract class Words {
-  static Set<String> dataBase = <String>{};
-  static Set<String> dictionary = <String>{};
-  static int _length = 5;
-  static String _cache = "";
-  //static Map<String, String> explainations = {};
-
-  static Future<bool> importWordsDatabase({int length = 5}) async {
-    //explainations.clear();
-    if(length != _length || dataBase.isEmpty || dictionary.isEmpty){
-      _length = length;
-      dataBase.clear();
-      _cache = "";
-      try {
-        var data = await rootBundle.loadString('assets/popular.txt');
-        LineSplitter.split(data).forEach((line) {
-          if(line.length == length && dataBase.lookup(line.substring(0,length - 1)) == null && dataBase.lookup(line.substring(0, length - 2)) == null) {
-            dataBase.add(line.toLowerCase());
-          }
-          _cache = line;
-        });
-      } catch (e) {
-        throw "Failed loading question database";
-      }
-      try {
-        var data = await rootBundle.loadString('assets/unixWords.txt');
-        LineSplitter.split(data).forEach((line) {
-          if(line.length == length && dictionary.lookup(line.substring(0,length - 1)) == null && dictionary.lookup(line.substring(0, length - 2)) == null) {
-            dictionary.add(line.toLowerCase());
-          }
-          _cache = line;
-        });
-      } catch (e) {
-        throw "Failed loading validation database";
-      }
-    }
-    if(dataBase.isEmpty) {
-      throw "Empty question database";
-    }
-    else if(dictionary.isEmpty) {
-      throw "Empty validation database";
-    }
-    return true;
-  }
-
-  static Future<String> generateWord() async {
-    int bound = dataBase.length;
-     if(bound == 0) {
-       try{
-        await Words.importWordsDatabase(length: _length);
-       } catch (e) {
-        return 'crash';
-       }
-       bound = dataBase.length;
-     }
-    var rng = Random();
-    String res = dataBase.elementAt(rng.nextInt(bound));
-    if(dictionary.lookup(res) == null) {
-      dictionary.add(res);
-    }
-    return res;
-  }
-
-  static bool isWordValidate(String word) {
-    return dictionary.lookup(word.toLowerCase()) != null;
-  }
+Future<Set<String>> generateDictionary() async {
+  // Directory documentRoot = await getApplicationDocumentsDirectory();
+  // String dicPath = documentRoot.path + Platform.pathSeparator + dicName + ".txt";
+  // File dicFile = File(dicPath);
+  String dicContents = await rootBundle.loadString("assets/All.txt");
+  Set<String> database = {};
+  LineSplitter.split(dicContents).forEach((line) {
+    database.add(line.toUpperCase());
+  });
+  return database;
 }
 
+Future<Map<String, List<String>>> generateQuestionSet({required String dicName, required int wordLen}) async {
+  // Directory documentRoot = await getApplicationDocumentsDirectory();
+  // String dicPath = documentRoot.path + Platform.pathSeparator + dicName + ".txt";
+  // File dicFile = File(dicPath);
+  String dicContents = await rootBundle.loadString("assets/" + dicName + ".txt");
+  Map<String, List<String>> database = {};
+  LineSplitter.split(dicContents).forEach((line) {
+    var vowelStart = line.indexOf('[');
+    var vowelEnd = line.indexOf(']');
+    var word = "";
+    var vowel = "";
+    var explain = "";
+    word = line.substring(0, vowelStart == -1 ? null : vowelStart).trim().toUpperCase();
+    if(vowelStart != -1){
+      vowel = line.substring(vowelStart, vowelEnd + 1).trim();
+      explain = line.substring(vowelEnd + 1).trim();
+    }
+    if(wordLen == -1 || word.length == wordLen) {
+      database[word] = [vowel, explain];
+    }
+  });
+  return database;
+}
+
+Future<String> fetchOnlineWord() async {
+  await Future.delayed(const Duration(seconds: 2));
+  return "BINGO";
+}
+
+String getNextWord(Map<String, List<String>> database) {
+  var rng = Random();
+  return database.keys.elementAt(rng.nextInt(database.length));
+}
