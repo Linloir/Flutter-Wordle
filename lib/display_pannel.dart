@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:56:05
- * @LastEditTime : 2022-03-08 21:47:38
+ * @LastEditTime : 2022-03-11 14:54:04
  * @Description  : The display widget of the wordle game
  */
 
@@ -12,7 +12,10 @@ import './event_bus.dart';
 import 'dart:math' as math;
 
 class WordleDisplayWidget extends StatefulWidget {
-  const WordleDisplayWidget({Key? key}) : super(key: key);
+  const WordleDisplayWidget({Key? key, required this.wordLen, required this.maxChances}) : super(key: key);
+
+  final int wordLen;
+  final int maxChances;
 
   @override
   State<WordleDisplayWidget> createState() => _WordleDisplayWidgetState();
@@ -28,7 +31,7 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
   void _validationAnimation(List<int> validation) async {
     onAnimation = true;
     bool result = true;
-    for(int i = 0; i < 5 && onAnimation; i++) {
+    for(int i = 0; i < widget.wordLen && onAnimation; i++) {
       setState((){
         inputs[r][i]["State"] = validation[i];
       });
@@ -44,7 +47,7 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
     onAnimation = false;
     r++;
     c = 0;
-    if(r == 6 || result == true) {
+    if(r == widget.maxChances || result == true) {
       mainBus.emit(event: "ValidationEnds", args: result);
       acceptInput = false;
     }
@@ -61,8 +64,8 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
       c = 0;
       onAnimation = false;
       acceptInput = true;
-      for(int i = 0; i < 6; i++) {
-        for(int j = 0; j < 5; j++) {
+      for(int i = 0; i < widget.maxChances; i++) {
+        for(int j = 0; j < widget.wordLen; j++) {
           inputs[i][j]["Letter"] = "";
           inputs[i][j]["State"] = 0;
         }
@@ -74,9 +77,9 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
   void initState() {
     super.initState();
     inputs = [
-      for(int i = 0; i < 6; i++)
+      for(int i = 0; i < widget.maxChances; i++)
         [
-          for(int j = 0; j < 5; j++)
+          for(int j = 0; j < widget.wordLen; j++)
             {
               "Letter": "",
               "State": 0,
@@ -111,17 +114,17 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
               child: Align(
                 alignment: Alignment.center,
                 child: AspectRatio(
-                  aspectRatio: 5 / 6,
+                  aspectRatio: widget.wordLen / widget.maxChances,
                   child: Column(
                     //Column(
                     children: [
-                      for(int i = 0; i < 6; i++)
+                      for(int i = 0; i < widget.maxChances; i++)
                         Expanded(
                           flex: 1,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              for (int j = 0; j < 5; j++)
+                              for (int j = 0; j < widget.wordLen; j++)
                                 AnimatedBuilder(
                                     animation: inputs[i][j]["InputAnimationController"],
                                     builder: (context, child) {
@@ -206,7 +209,7 @@ class _WordleDisplayWidgetState extends State<WordleDisplayWidget> with TickerPr
       ),
       onNotification: (noti) {
         if(noti.type == InputType.singleCharacter) {
-          if(r < 6 && c < 5 && !onAnimation && acceptInput) {
+          if(r < widget.maxChances && c < widget.wordLen && !onAnimation && acceptInput) {
             setState((){
               inputs[r][c]["Letter"] = noti.msg;
               inputs[r][c]["State"] = 3;

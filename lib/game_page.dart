@@ -1,7 +1,7 @@
 /*
  * @Author       : Linloir
  * @Date         : 2022-03-05 20:41:41
- * @LastEditTime : 2022-03-09 13:10:14
+ * @LastEditTime : 2022-03-11 14:54:15
  * @Description  : Offline page
  */
 
@@ -14,14 +14,19 @@ import 'package:wordle/display_pannel.dart';
 import 'package:wordle/instruction_pannel.dart';
 import 'package:wordle/popper_generator.dart';
 
-class OfflinePage extends StatefulWidget {
-  const OfflinePage({Key? key}) : super(key: key);
+class GamePage extends StatefulWidget {
+  const GamePage({Key? key, required this.database, required this.wordLen, required this.maxChances, required this.gameMode}) : super(key: key);
+
+  final Map<String, List<String>> database;
+  final int wordLen;
+  final int maxChances;
+  final int gameMode;
 
   @override
-  State<OfflinePage> createState() => _OfflinePageState();
+  State<GamePage> createState() => _GamePageState();
 }
 
-class _OfflinePageState extends State<OfflinePage> with TickerProviderStateMixin{
+class _GamePageState extends State<GamePage> with TickerProviderStateMixin{
   late AnimationController _controller;
 
   void _onGameEnd(dynamic args) {
@@ -68,7 +73,7 @@ class _OfflinePageState extends State<OfflinePage> with TickerProviderStateMixin
                 fontWeight: FontWeight.bold,
                 fontSize: 20.0,
               ),
-              title: const Text('WORDLE OFFLINE'),
+              title: const Text('WORDLE'),
               centerTitle: true,
               //iconTheme: const IconThemeData(color: Colors.black),
               actions: [
@@ -118,8 +123,12 @@ class _OfflinePageState extends State<OfflinePage> with TickerProviderStateMixin
               ],
             ),
             body: Container(
-              child: const ValidationProvider(
-                child: WordleDisplayWidget(),
+              child: ValidationProvider(
+                database: widget.database,
+                wordLen: widget.wordLen,
+                maxChances: widget.maxChances,
+                gameMode: widget.gameMode,
+                child: WordleDisplayWidget(wordLen: widget.wordLen, maxChances: widget.maxChances),
               ),
               color: Theme.of(context).brightness == Brightness.dark ? Colors.grey[850] : Colors.white,
             ),
