@@ -14,7 +14,7 @@ Visit [Wordle on my server](http://wordle.linloir.xyz) to play the online versio
 
 Download `.apk` file in the release page, install & enjoy.
 
-### Deploy an web version
+### Deploy a web version
 
 - clone this repository
 - `flutter clean`
