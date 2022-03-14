@@ -24,6 +24,7 @@ Download `.apk` file in the release page, install & enjoy.
 # What dictionary am I using
 
 The hidden word is selected from one of the wordlists from [English wordlists for Chinese](https://github.com/mahavivo/english-wordlists)
+
 The verification wordlist currently is an addup of all the wordlists available.
 
 > Note that I'm changing the verification wordlist to [Letterpress wordlist](https://github.com/lorenbrichter/Words) lately.
