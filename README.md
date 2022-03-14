@@ -29,7 +29,7 @@ The verification wordlist currently is an addup of all the wordlists available.
 
 > Note that I'm changing the verification wordlist to [Letterpress wordlist](https://github.com/lorenbrichter/Words) lately.
 
-# Screenshots
+## Screenshots
 
 
 <p float="left">
