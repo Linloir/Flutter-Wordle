@@ -14,14 +14,14 @@ Visit [Wordle on my server](http://wordle.linloir.xyz) to play the online versio
 
 Download `.apk` file in the release page, install & enjoy.
 
-## Debug on your device
+### Deploy an web version
 
 - clone this repository
 - `flutter clean`
 - `flutter pub get`
-- `flutter run -d chrome --web-renderer html`
+- `flutter build web --release --web-renderer html`
 
-# What dictionary am I using
+## What dictionary am I using
 
 The hidden word is selected from one of the wordlists from [English wordlists for Chinese](https://github.com/mahavivo/english-wordlists)
 
