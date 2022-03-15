@@ -1,10 +1,10 @@
 # Flutter-Wordle
 
-A wordle game written by flutter
+A wordle game written with flutter
 
 ## How to play
 
-Thanks to the feature of Fluttter, the game is available on all platforms
+Thanks to the feature of Flutter, the game is available on all platforms
 
 ### Play on Web
 
