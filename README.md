@@ -38,14 +38,9 @@ The verification wordlist currently is an addup of all the wordlists available.
 <img src="http://pic.linloir.xyz/images/2022/03/08/IMG_20220308_220237.jpg" width="200">
 <img src="http://pic.linloir.xyz/images/2022/03/08/IMG_20220308_220353.jpg" width="200">
 </p>
-<!--
-<img src="http://pic.linloir.xyz/images/2022/03/08/Screenshot_2022-03-07-15-48-39-230_com.linloir.wordle.jpg" width="200">
-<img src="http://pic.linloir.xyz/images/2022/03/08/Screenshot_2022-03-07-16-14-00-128_com.linloir.wordle.jpg" width="200">
-<img src="http://pic.linloir.xyz/images/2022/03/08/Screenshot_2022-03-07-16-15-23-309_com.linloir.wordle.jpg" width="200">
---/>
 
 ## Support Me
 
 This will be a longterm project and there will be awsome features coming up (include history page, online version, ranking, sharing, versus mode etc)
 
-you can support me by simply starring this project
+you can support me by simply **starring** this project
