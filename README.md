@@ -43,4 +43,6 @@ The verification wordlist currently is an addup of all the wordlists available.
 
 This will be a longterm project and there will be awsome features coming up (include history page, online version, ranking, sharing, versus mode etc)
 
+P.S. Several new Projects are currently occupying the develop time of this app, so further development might be delayed. One of them is a [component repository](https://github.com/Linloir/LUI-Flutter_Gui_Kit) I used for my own flutter apps and you might want to have a look~
+
 you can support me by simply **starring** this project
