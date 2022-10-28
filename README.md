@@ -8,7 +8,7 @@ Thanks to the feature of Flutter, the game is available on all platforms
 
 ### Play on Web
 
-Visit [Wordle on my server](http://wordle.linloir.xyz) to play the online version
+Visit [Wordle on my server](http://wordle.linloir.cn) to play the online version
 
 ### Play on Android
 
